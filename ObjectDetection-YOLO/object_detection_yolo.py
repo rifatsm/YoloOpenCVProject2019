@@ -10,6 +10,7 @@ import numpy as np
 import os.path
 import math
 import paho.mqtt.client as mqtt
+import time
 
 # Create MQTT Client Instance 
 client_name = "holoyolo"
@@ -17,6 +18,9 @@ broker_address = "192.168.120.4"
 client = mqtt.Client(client_name)
 client.connect(broker_address)
 # client.publish("theia", "Racer Archi")
+
+# For time calculation
+start_time = 0
 
 
 # Initialize the parameters
@@ -90,13 +94,16 @@ def drawPred(classId, conf, left, top, right, bottom):
         label = '%s:%s' % (classes[classId], label)
 
         if classes[classId] == "orange":
-            label = "red ball,2"
+            label = "red ball,t0=" + str(time.time() - start_time)
+            # print("label: "+label)
             client.publish("HoloVision/Ornaments", label)
         elif classes[classId] == "cup":
-            label = "blue ball,2"
+            label = "blue ball,t0=" + str(time.time() - start_time)
+            # print("label: "+label)
             client.publish("HoloVision/Ornaments", label)
         elif classes[classId] == "donut":
-            label = "tree,2"
+            label = "tree,t0=" + str(time.time() - start_time)
+            # print("label: "+label)
             client.publish("HoloVision/Ornaments", label)
 
     #client.publish("HoloVision/Ornaments", label)
@@ -219,6 +226,7 @@ if (not args.image):
 while cv.waitKey(1) < 0:
     
     # get frame from the video
+    start_time = time.time()
     hasFrame, frame = cap.read()
     
     # Stop the program if reached end of video
