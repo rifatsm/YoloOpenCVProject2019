@@ -13,7 +13,7 @@ import paho.mqtt.client as mqtt
 
 # Create MQTT Client Instance 
 client_name = "holoyolo"
-broker_address = "dveiot.cs.vt.edu"
+broker_address = "192.168.120.4"
 client = mqtt.Client(client_name)
 client.connect(broker_address)
 # client.publish("theia", "Racer Archi")
@@ -83,7 +83,17 @@ def drawPred(classId, conf, left, top, right, bottom):
         assert(classId < len(classes))
         label = '%s:%s' % (classes[classId], label)
 
-    client.publish("theia", label)
+        if classes[classId] == "orange":
+            label = "red ball,2"
+            client.publish("HoloVision/Ornaments", label)
+        elif classes[classId] == "cup":
+            label = "blue ball,2"
+            client.publish("HoloVision/Ornaments", label)
+        elif classes[classId] == "donut":
+            label = "tree,2"
+            client.publish("HoloVision/Ornaments", label)
+
+    #client.publish("HoloVision/Ornaments", label)
 
     #Display the label at the top of the bounding box
     labelSize, baseLine = cv.getTextSize(label, cv.FONT_HERSHEY_SIMPLEX, 0.5, 1)
