@@ -31,6 +31,7 @@ parser.add_argument('--video', help='Path to video file.')
 parser.add_argument('--url', help='Path to remote url.')
 parser.add_argument('--single', help='To identify the single object at the center.')
 parser.add_argument('--label', help='Send the label(s) of the object(s).')
+parser.add_argument('--ignore_person', help='Ignores identifying person as an object.')
 args = parser.parse_args()
         
 # Load names of classes
@@ -74,6 +75,11 @@ def drawPred(classId, conf, left, top, right, bottom):
         # print("right: ", right)
         # print("bottom: ", bottom)
     # Draw a bounding box.
+
+    if(args.ignore_person):
+        if classes[classId] == "person":
+            return;
+
     cv.rectangle(frame, (left, top), (right, bottom), (255, 178, 50), 3)
     
     label = '%.2f' % conf

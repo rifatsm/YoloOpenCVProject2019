@@ -15,6 +15,11 @@ a video file:
 a URL:
 	python3 object_detection_yolo.py --url="https://www.dropbox.com/s/zs7p0yke8m7wyzz/noone.jpg?dl=1"
 
+To ignore person being recognized, try "--ignore_person=True"
+
+Sample command: (input from camera)
+	python3 object_detection_yolo.py --single=True --ignore_person=True
+
 C++:
 a single image:
     ./object_detection_yolo.out --image=bird.jpg
